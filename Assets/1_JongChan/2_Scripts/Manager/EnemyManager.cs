@@ -9,4 +9,9 @@ public class EnemyManager : SingletonMonoDestroy<EnemyManager>
     {
         enemys.Add(enemy);
     }
+
+    public void RemoveEnemy(Unit enemy)
+    {
+        enemys.Remove(enemy);
+    }
 }

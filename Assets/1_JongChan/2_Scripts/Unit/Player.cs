@@ -141,12 +141,11 @@ public class Player : Unit
 
     private void Skill_2()
     {
-        
     }
 
     IEnumerator Co_Skill_2()
     {
-        
+        yield return null;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
