@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,21 +13,31 @@ public class Unit : Actor
     }
 
     public Kind kind; //인스팩터에서 세팅
-    
-    [Header("Hp")]
-    public float curHp;
+
+    [Header("Hp")] public float curHp;
     public float maxHp;
 
-    protected virtual void OnHit(Unit attacker, int power)
+    protected Rigidbody2D rigidbody2D;
+    protected Collider2D collider;
+
+    protected virtual void Start()
     {
-        if (CheckUnit())
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
+    }
+
+    public virtual void OnHit(Unit attacker, int power)
+    {
+        curHp -= power;
+
+        if (curHp <= 0)
         {
-            curHp -= power;
+            OnDead(attacker);
         }
     }
 
-    protected virtual bool CheckUnit()
+    public virtual void OnDead(Unit from)
     {
-        return true;
+        Destroy(gameObject);
     }
 }
