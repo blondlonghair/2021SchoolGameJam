@@ -17,7 +17,7 @@ public class Unit : Actor
     public float curHp;
     public float maxHp;
 
-    public virtual void OnHit(Unit attacker, int power)
+    protected virtual void OnHit(Unit attacker, int power)
     {
         if (CheckUnit())
         {
