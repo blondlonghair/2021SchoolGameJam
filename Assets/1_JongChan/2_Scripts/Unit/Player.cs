@@ -144,6 +144,11 @@ public class Player : Unit
         
     }
 
+    IEnumerator Co_Skill_2()
+    {
+        
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.name == "Ground")
