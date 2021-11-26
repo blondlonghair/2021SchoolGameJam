@@ -19,11 +19,13 @@ public class Unit : Actor
 
     protected Rigidbody2D rigidbody2D;
     protected Collider2D collider;
+    protected SpriteRenderer spriteRenderer;
 
     protected virtual void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public virtual void OnHit(Unit attacker, int power)
