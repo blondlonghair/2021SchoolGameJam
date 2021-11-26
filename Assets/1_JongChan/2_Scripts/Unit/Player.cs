@@ -167,8 +167,7 @@ public class Player : Unit
 
     private void Skill_2()
     {
-        Instantiate(bullet, transform.position,
-            spriteRenderer.flipX ? quaternion.Euler(0, 0, 180) : quaternion.Euler(0, 0, 0));
+        Instantiate(bullet, transform.position, spriteRenderer.flipX ? quaternion.Euler(0, 0, 180) : quaternion.Euler(0, 0, 0), gameObject.transform);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
