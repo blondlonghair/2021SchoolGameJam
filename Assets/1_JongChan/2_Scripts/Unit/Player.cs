@@ -18,8 +18,11 @@ public class Player : Unit
 
     [Header("ref")] [SerializeField] private GameObject bullet;
 
-    [Header("타이머")] [SerializeField] private float dashTimer = 1;
+    [Header("타이머")] 
+    [SerializeField] private float dashTimer = 1;
     [SerializeField] private float dashInterval = 1;
+    [SerializeField] private float atkTimer = 0.5f;
+    [SerializeField] private float atkInterval = 0.5f;
     [SerializeField] private float skill1Timer = 10;
     [SerializeField] private float skill1Interval = 10;
     [SerializeField] private float skill2Timer = 20;
@@ -57,6 +60,7 @@ public class Player : Unit
         dashTimer += Time.deltaTime;
         skill1Timer += Time.deltaTime;
         skill2Timer += Time.deltaTime;
+        atkTimer += Time.deltaTime;
     }
 
     void PlayerMove()
@@ -64,9 +68,12 @@ public class Player : Unit
         Idle();
 
         Move();
-        
-        Attack();
-        
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            Attack();
+        }
+
         if(Input.anyKeyDown)
         {
             foreach (var dic in keyDictionary)
@@ -81,6 +88,15 @@ public class Player : Unit
 
     private void Idle()
     {
+        if (!Input.GetKey(KeyCode.LeftArrow) || !Input.GetKey(KeyCode.RightArrow))
+        {
+            print("fds");
+        }
+        
+        if (!Input.anyKey)
+        {
+            // anim.SetTrigger("isIdle");
+        }
     }
 
     private void Move()
@@ -91,11 +107,17 @@ public class Player : Unit
         {
             spriteRenderer.flipX = true;
             Horizontal = -1;
+            anim.SetBool("isRun", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             spriteRenderer.flipX = false;
             Horizontal = 1;
+            anim.SetBool("isRun", true);
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
         }
         
         rigidbody2D.AddForce(Vector2.right * Horizontal, ForceMode2D.Impulse);
@@ -112,6 +134,7 @@ public class Player : Unit
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
+            anim.SetTrigger("isIdle");
         }
     }
 
@@ -124,12 +147,12 @@ public class Player : Unit
 
         if (curJump == 1)
         {
-            anim.SetTrigger("IsJump1");
+            anim.SetTrigger("isJump1");
         }
 
         else if (curJump == 2)
         {
-            anim.SetTrigger("IsJump2");
+            anim.SetTrigger("isJump2");
         }
 
         rigidbody2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -137,6 +160,9 @@ public class Player : Unit
 
     private void Attack()
     {
+        if (atkTimer < atkInterval) return;
+        atkTimer = 0;
+        
         StartCoroutine(Co_Attack());
     }
 
@@ -185,7 +211,7 @@ public class Player : Unit
     {
         isDash = true;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             transform.position +=
