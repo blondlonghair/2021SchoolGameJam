@@ -88,7 +88,7 @@ public class KnifeEnemy : Unit
 
     public void EnemyMove()
     {
-        if(TargetChk == true && AttackTiming == false) // °¡½Ã°Å¸®³» player°¡ ÀÖÀ»¶§ ¿òÁ÷ÀÌ°í, »çÁ¤ °Å¸®³» ÀÖÀ¸¸é ¸ØÃã
+        if(TargetChk == true && AttackTiming == false) // ê°€ì‹œê±°ë¦¬ë‚´ playerê°€ ìˆì„ë•Œ ì›€ì§ì´ê³ , ì‚¬ì • ê±°ë¦¬ë‚´ ìˆìœ¼ë©´ ë©ˆì¶¤
         {
             //Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
@@ -98,7 +98,7 @@ public class KnifeEnemy : Unit
             else this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
         }
 
-        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //½ºÆù À§Ä¡¿¡¼­ ¸Ö¸® ¶³¾îÁ³À»¶§ ¿ø ÀÚ¸®·Î µ¹¾Æ°¨
+        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //ìŠ¤í° ìœ„ì¹˜ì—ì„œ ë©€ë¦¬ ë–¨ì–´ì¡Œì„ë•Œ ì› ìë¦¬ë¡œ ëŒì•„ê°
         {
             //Debug.Log("Target");
             BaseChk = true;
@@ -111,7 +111,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : 0ÀÏ¶§ °¡¸¸È÷
+        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ëœë¤ ì›€ì§ì„ : 0ì¼ë•Œ ê°€ë§Œíˆ
         {
             //Debug.Log("Wait");
             if (Waits > 0)
@@ -124,7 +124,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : 1ÀÏ¶§ ¿À¸¥ÂÊ
+        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ëœë¤ ì›€ì§ì„ : 1ì¼ë•Œ ì˜¤ë¥¸ìª½
         {
             //Debug.Log("Right");
             if (MoveCheck == false) // ÀÌµ¿ À§Ä¡ Á¤ÇØÁÜ
@@ -149,7 +149,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : -1ÀÏ¶§ ¿ŞÂÊ
+        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ëœë¤ ì›€ì§ì„ : -1ì¼ë•Œ ì™¼ìª½
         {
             //Debug.Log("Left");
             if (MoveCheck == false)
