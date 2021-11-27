@@ -31,7 +31,7 @@ public class KnifeEnemy : Unit
 
     Vector2 PlayerPos;
     public float PlayerDis;
-    public int MaxPlayerDis = 6;
+    public int MaxPlayerDis;
     
     public float TargetMove;
 
@@ -45,6 +45,12 @@ public class KnifeEnemy : Unit
 
         Player = GameObject.FindWithTag("Player");
         player = Player.GetComponent<Player>();
+
+        if (this.gameObject.tag == "KnifeEnemy") // 근접 어그로 범위
+            MaxPlayerDis = 4;
+
+        else if(this.gameObject.tag == "GunEnemy") // 원거리 어그로 범위
+            MaxPlayerDis = 8;
     }
 
     // Start is called before the first frame update
@@ -66,14 +72,14 @@ public class KnifeEnemy : Unit
 
         PlayerDis = Vector2.Distance(PlayerPos, CurPos);
 
-        Debug.Log(TargetChk);
+        //Debug.Log(TargetChk);
 
-        if (PlayerDis < MaxPlayerDis)
+        if (PlayerDis < MaxPlayerDis) // 어그로 끌렸을 때 
             TargetChk = true;
 
-        else if(PlayerDis > MaxPlayerDis && TargetChk == true)
+        else if(PlayerDis > MaxPlayerDis && TargetChk == true) // 어그로 풀렸을 때 다시 베이스 위치 잡아줌
         {
-            Debug.Log("TargetFalse");
+            //Debug.Log("TargetFalse");
             BasePos = CurPos;
             TargetChk = false;
         }
@@ -84,7 +90,7 @@ public class KnifeEnemy : Unit
     {
         if(TargetChk == true && AttackTiming == false) // 가시거리내 player가 있을때 움직이고, 사정 거리내 있으면 멈춤
         {
-            Debug.Log("Attack");
+            //Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
 
             if (TargetMove < 0) this.gameObject.transform.Translate(-MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
@@ -94,11 +100,11 @@ public class KnifeEnemy : Unit
 
         if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //스폰 위치에서 멀리 떨어졌을때 원 자리로 돌아감
         {
-            Debug.Log("Target");
+            //Debug.Log("Target");
             BaseChk = true;
-            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime);
+            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime); 
 
-            if (BaseDis < 0.3)
+            if (BaseDis < 0.3) // 다시 베이스 위치로 왔을 때 랜덤 이동
             {
                 BaseChk = false;
                 RanDir = Random.Range(-1, 2);
@@ -107,7 +113,6 @@ public class KnifeEnemy : Unit
 
         if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 0일때 가만히
         {
-            Debug.Log("wait");
             //Debug.Log("Wait");
             if (Waits > 0)
                 Waits -= Time.deltaTime * 0.1f;
@@ -121,8 +126,8 @@ public class KnifeEnemy : Unit
 
         else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 1일때 오른쪽
         {
-            Debug.Log("Right");
-            if (MoveCheck == false)
+            //Debug.Log("Right");
+            if (MoveCheck == false) // 이동 위치 정해줌
             {
                 Waits = 0.3f;
                 MoveCheck = true;
@@ -137,7 +142,7 @@ public class KnifeEnemy : Unit
                 StartCoroutine("RightMove");
             }
 
-            else if(Waits < 0 && CurPos.x >= MaxPos.x)
+            else if(Waits < 0 && CurPos.x >= MaxPos.x) // 다 움직였을 때 다시 랜덤
             {
                 RanDir = Random.Range(-1, 2);
                 MoveCheck = false;
@@ -146,7 +151,7 @@ public class KnifeEnemy : Unit
 
         else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : -1일때 왼쪽
         {
-            Debug.Log("Left");
+            //Debug.Log("Left");
             if (MoveCheck == false)
             {
                 Waits = 0.3f;
@@ -170,7 +175,7 @@ public class KnifeEnemy : Unit
         }
     }
 
-    public void PlayerAttack()
+    public void PlayerAttack() // 플레이어 공격
     {
         player.OnHit(this, 20);
     }
