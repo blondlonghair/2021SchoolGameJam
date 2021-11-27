@@ -10,6 +10,10 @@ public class KnifeEnemy : Unit
     Vector3 CurPos;
     Vector3 MaxPos;
 
+    Player player = null;
+
+    public float MoveSpeed = 2.0f;
+
     bool TargetChk = false;
     bool MoveCheck = false;
     bool BaseChk = false;
@@ -40,6 +44,7 @@ public class KnifeEnemy : Unit
         CurPos = this.gameObject.transform.position;
 
         Player = GameObject.FindWithTag("Player");
+        player = Player.GetComponent<Player>();
     }
 
     // Start is called before the first frame update
@@ -61,11 +66,14 @@ public class KnifeEnemy : Unit
 
         PlayerDis = Vector2.Distance(PlayerPos, CurPos);
 
+        Debug.Log(TargetChk);
+
         if (PlayerDis < MaxPlayerDis)
             TargetChk = true;
 
         else if(PlayerDis > MaxPlayerDis && TargetChk == true)
         {
+            Debug.Log("TargetFalse");
             BasePos = CurPos;
             TargetChk = false;
         }
@@ -76,17 +84,19 @@ public class KnifeEnemy : Unit
     {
         if(TargetChk == true && AttackTiming == false) // 가시거리내 player가 있을때 움직이고, 사정 거리내 있으면 멈춤
         {
+            Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
 
-            if (TargetMove < 0) this.gameObject.transform.Translate(-4.8f * Time.deltaTime, 0.0f, 0.0f);
+            if (TargetMove < 0) this.gameObject.transform.Translate(-MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
 
-            else this.gameObject.transform.Translate(4.8f * Time.deltaTime, 0.0f, 0.0f);
+            else this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
         }
 
-        if (BaseDis > MaxBaseDis || BaseChk == true && TargetChk == false) //스폰 위치에서 멀리 떨어졌을때 원 자리로 돌아감
+        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //스폰 위치에서 멀리 떨어졌을때 원 자리로 돌아감
         {
+            Debug.Log("Target");
             BaseChk = true;
-            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.2f * Time.deltaTime);
+            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime);
 
             if (BaseDis < 0.3)
             {
@@ -95,10 +105,11 @@ public class KnifeEnemy : Unit
             }
         }
 
-        if (RanDir == 0 && BaseChk == false && TargetChk == false) // 랜덤 움직임 : 0일때 가만히
+        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 0일때 가만히
         {
+            Debug.Log("wait");
             //Debug.Log("Wait");
-            if(Waits > 0)
+            if (Waits > 0)
                 Waits -= Time.deltaTime * 0.1f;
 
             else if(Waits <= 0)
@@ -108,9 +119,9 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == 1 && BaseChk == false && TargetChk == false) // 랜덤 움직임 : 1일때 오른쪽
+        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 1일때 오른쪽
         {
-            //Debug.Log("Right");
+            Debug.Log("Right");
             if (MoveCheck == false)
             {
                 Waits = 0.3f;
@@ -133,9 +144,9 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == -1 && BaseChk == false && TargetChk == false) // 랜덤 움직임 : -1일때 왼쪽
+        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : -1일때 왼쪽
         {
-            //Debug.Log("Left");
+            Debug.Log("Left");
             if (MoveCheck == false)
             {
                 Waits = 0.3f;
@@ -159,15 +170,20 @@ public class KnifeEnemy : Unit
         }
     }
 
+    public void PlayerAttack()
+    {
+        player.OnHit(this, 20);
+    }
+
     IEnumerator RightMove()
     {
-        this.gameObject.transform.Translate(2.0f * Time.deltaTime, 0.0f, 0.0f);
+        this.gameObject.transform.Translate(MoveSpeed * Time.deltaTime, 0.0f, 0.0f);
         yield return YieldCache.WaitForSeconds(0.01f);
     }
 
     IEnumerator LeftMove()
     {
-        this.gameObject.transform.Translate(-2.0f * Time.deltaTime, 0.0f, 0.0f);
+        this.gameObject.transform.Translate(-MoveSpeed * Time.deltaTime, 0.0f, 0.0f);
         yield return YieldCache.WaitForSeconds(0.01f);
     }
 }

@@ -5,6 +5,10 @@ using UnityEngine;
 public class AttackRange : MonoBehaviour
 {
     GameObject Enemy;
+    float AttackDel = 0.7f; // 공격 딜레이
+    bool Attack = false; // 공격 딜레이
+
+    Player player = null;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +33,22 @@ public class AttackRange : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Enemy.GetComponent<KnifeEnemy>().AttackTiming = true;
 
-            if(Enemy.gameObject.name == "KnifeEnemy")
+            if (Enemy.gameObject.tag == "KnifeEnemy") // 근접 몹 일때
             {
-                //공격
+                Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 0.0f;
+                AttackDel -= 0.3f * Time.deltaTime;
+
+                if(AttackDel <= 0.0f)
+                {
+                    AttackDel = 0.7f;
+                    StartCoroutine("KnifeEnemyAtk");
+                }
             }
         }
     }
@@ -46,12 +57,18 @@ public class AttackRange : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
-
-            if (Enemy.gameObject.name == "KnifeEnemy")
+            if (Enemy.gameObject.tag == "KnifeEnemy") // 근접 몹 일때
             {
-                //다시 움직임
+                Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
+                Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 2.0f;
+                AttackDel = 0.7f;
             }
         }
+    }    
+
+    IEnumerator KnifeEnemyAtk()
+    {
+        Enemy.GetComponent<KnifeEnemy>().PlayerAttack();
+        yield return YieldCache.WaitForSeconds(0.01f);
     }
 }
