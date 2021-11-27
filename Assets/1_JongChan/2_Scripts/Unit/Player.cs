@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 using Unity.Mathematics;
 using UnityEditor;
@@ -37,7 +36,6 @@ public class Player : Unit
 
         keyDictionary = new Dictionary<KeyCode, Action>
         {
-            {KeyCode.LeftControl, Attack},
             {KeyCode.Space, Jump},
             {KeyCode.X, Dash},
             {KeyCode.A, Skill_1},
@@ -67,6 +65,8 @@ public class Player : Unit
 
         Move();
         
+        Attack();
+        
         if(Input.anyKeyDown)
         {
             foreach (var dic in keyDictionary)
@@ -81,7 +81,6 @@ public class Player : Unit
 
     private void Idle()
     {
-        //Idle 애니메이션 추가
     }
 
     private void Move()
@@ -138,10 +137,7 @@ public class Player : Unit
 
     private void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            StartCoroutine(Co_Attack());
-        }
+        StartCoroutine(Co_Attack());
     }
 
     private void Dash()
