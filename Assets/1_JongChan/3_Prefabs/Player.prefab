@@ -108,7 +108,6 @@ MonoBehaviour:
   curJump: 0
   maxJump: 2
   isDash: 0
-  bullet: {fileID: 7559012480345574806, guid: df06b8c0a0ceb8b4caacd049a2f0d3e3, type: 3}
   dashTimer: 1
   dashInterval: 1
   atkTimer: 0.5
@@ -270,3 +269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 30
+  bullet: {fileID: 7559012480345574806, guid: df06b8c0a0ceb8b4caacd049a2f0d3e3, type: 3}
+  atkHitEffect: {fileID: 7056899538173755992, guid: d8430e1d9820ca34485132131cf7fa97, type: 3}
+  skill1Effect: {fileID: 1675372823048435356, guid: fff70399191d37b45a7e7abbf67ec573, type: 3}
+  skill1HitEffect: {fileID: 464627130198003027, guid: 807fa8afa2a3dd64eb64bcda138be0e0, type: 3}
+  skill2HitEffect: {fileID: 0}
