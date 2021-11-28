@@ -16,7 +16,8 @@ public class Player : Unit
     [SerializeField] private int maxJump;
     [SerializeField] private bool isDash;
 
-    [Header("ref")] [SerializeField] private GameObject bullet;
+    [Header("ref")] 
+    [SerializeField] private GameObject bullet;
 
     [Header("타이머")] 
     [SerializeField] private float dashTimer = 1;
@@ -29,7 +30,7 @@ public class Player : Unit
     [SerializeField] private float skill2Interval = 20;
 
     //내부
-    private Collider2D weaponcollider;
+    private Weapon weapon;
     private Animator anim;
     Dictionary<KeyCode, Action> keyDictionary;
     
@@ -45,7 +46,7 @@ public class Player : Unit
             {KeyCode.S, Skill_2}
         };
 
-        transform.Find("Weapon").TryGetComponent(out weaponcollider);
+        transform.Find("Weapon").TryGetComponent(out weapon);
         TryGetComponent(out anim);
     }
 
@@ -65,14 +66,9 @@ public class Player : Unit
 
     void PlayerMove()
     {
-        Idle();
-
         Move();
 
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            Attack();
-        }
+        Attack();
 
         if(Input.anyKeyDown)
         {
@@ -84,44 +80,7 @@ public class Player : Unit
                 }
             }
         }
-    }
-
-    private void Idle()
-    {
-        if (!Input.GetKey(KeyCode.LeftArrow) || !Input.GetKey(KeyCode.RightArrow))
-        {
-            print("fds");
-        }
         
-        if (!Input.anyKey)
-        {
-            // anim.SetTrigger("isIdle");
-        }
-    }
-
-    private void Move()
-    {
-        float Horizontal = 0;
-            
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            spriteRenderer.flipX = true;
-            Horizontal = -1;
-            anim.SetBool("isRun", true);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            spriteRenderer.flipX = false;
-            Horizontal = 1;
-            anim.SetBool("isRun", true);
-        }
-        else
-        {
-            anim.SetBool("isRun", false);
-        }
-        
-        rigidbody2D.AddForce(Vector2.right * Horizontal, ForceMode2D.Impulse);
-
         if (rigidbody2D.velocity.x > moveSpeed)
         {
             rigidbody2D.velocity = new Vector2(moveSpeed, rigidbody2D.velocity.y);
@@ -130,6 +89,29 @@ public class Player : Unit
         {
             rigidbody2D.velocity = new Vector2(moveSpeed * (-1), rigidbody2D.velocity.y);
         }
+    }
+
+    private void Move()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftControl))
+        {
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            rigidbody2D.AddForce(Vector2.left, ForceMode2D.Impulse);
+            anim.SetBool("isRun", true);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
+        {
+            gameObject.transform.localScale = new Vector3(1,1,1);
+            rigidbody2D.AddForce(Vector2.right, ForceMode2D.Impulse);
+            anim.SetBool("isRun", true);
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
+        
+
+        
         
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
@@ -147,12 +129,12 @@ public class Player : Unit
 
         if (curJump == 1)
         {
-            anim.SetTrigger("isJump1");
+            anim.SetInteger("isJump", curJump);
         }
 
         else if (curJump == 2)
         {
-            anim.SetTrigger("isJump2");
+            anim.SetInteger("isJump", curJump);
         }
 
         rigidbody2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -160,10 +142,48 @@ public class Player : Unit
 
     private void Attack()
     {
-        if (atkTimer < atkInterval) return;
-        atkTimer = 0;
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            anim.SetBool("isAttack", true);
+        }
         
-        StartCoroutine(Co_Attack());
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (atkTimer < atkInterval) return;
+            atkTimer = 0;
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                rigidbody2D.AddForce(Vector2.right * -100, ForceMode2D.Impulse);
+                weapon.Attack();
+                print("LeftArrowAtk");
+            }
+
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                rigidbody2D.AddForce(Vector2.right * 100, ForceMode2D.Impulse);
+                weapon.Attack();
+                print("RightArrowAtk");
+            }
+
+            else
+            {
+                weapon.Attack();
+                print("JustAtk");
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            atkTimer = 0.5f;
+            anim.SetBool("isAttack", false);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.LeftControl) && curJump > 0)
+        {
+            anim.SetTrigger("isJumpAttack");
+            weapon.Attack();
+        }
     }
 
     private void Dash()
@@ -179,7 +199,8 @@ public class Player : Unit
         if (skill1Timer < skill1Interval) return;
         skill1Timer = 0;
         
-        StartCoroutine(Co_Skill_1());
+        anim.SetTrigger("isSkill1");
+        weapon.Skill1();
     }
 
     private void Skill_2()
@@ -187,7 +208,7 @@ public class Player : Unit
         if (skill2Timer < skill2Interval) return;
         skill2Timer = 0;
         
-        Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, spriteRenderer.flipX ? 180 : 0));
+        anim.SetTrigger("isSkill2");
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -195,39 +216,41 @@ public class Player : Unit
         if (other.gameObject.name == "Ground")
         {
             curJump = 0;
+            anim.SetInteger("isJump", curJump);
         }
     }
-    
-    IEnumerator Co_Attack()
+
+    public void Skill2_Shot()
     {
-        //공격 애니메이션 추가 할 곳
-        weaponcollider.enabled = true;
-        yield return YieldCache.WaitForSeconds(1f);
-        weaponcollider.enabled = false;
-        yield return null;
+        Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.localScale.x > 0 ? 0 : 180));
+    }
+
+    public void Attack_CheckPosition()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            localScale = new Vector3(-1, 1, 1);
+        }
+        
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            localScale = new Vector3(1, 1, 1);
+        }
     }
     
     IEnumerator Co_Dash()
     {
         isDash = true;
+        anim.SetBool("isDash", isDash);
 
         for (int i = 0; i < 3; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             transform.position +=
-                new Vector3((spriteRenderer.flipX ? -moveSpeed : moveSpeed) * 10 * Time.deltaTime, 0, 0);
+                new Vector3((transform.localScale.x < 0 ? -moveSpeed : moveSpeed) * 10 * Time.deltaTime, 0, 0);
         }
 
         isDash = false;
-    }
-    
-    IEnumerator Co_Skill_1()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            yield return YieldCache.WaitForSeconds(0.01f);
-            transform.position +=
-                new Vector3((spriteRenderer.flipX ? -moveSpeed : moveSpeed) * 10 * Time.deltaTime, 0, 0);
-        }
+        anim.SetBool("isDash", isDash);
     }
 }

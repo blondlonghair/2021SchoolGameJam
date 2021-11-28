@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2931388319430468620}
   - component: {fileID: 7410781371592147348}
   - component: {fileID: 4421264467867100518}
+  - component: {fileID: 788115539138013458}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a832cfdb16c646d4686e55a4f7f9af7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,4 +96,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd67cdb265e5ce438e75df6c6401944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4668324065742746388, guid: d3becacfd1e332b4c98b9ff45afba7c1, type: 3}
+--- !u!61 &788115539138013458
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7559012480345574806}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6, y: 0.56}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 0.5}
+  m_EdgeRadius: 0
