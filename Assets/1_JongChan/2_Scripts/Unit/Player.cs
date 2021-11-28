@@ -26,6 +26,9 @@ public class Player : Unit
     [SerializeField] private float skill2Timer = 20;
     [SerializeField] private float skill2Interval = 20;
 
+    [Header("참조")] 
+    [SerializeField] private GameObject dashEffect;
+    
     //내부
     private Weapon weapon;
     private Animator anim;
@@ -128,6 +131,7 @@ public class Player : Unit
 
         else if (curJump == 2)
         {
+            Instantiate(dashEffect, transform.position, Quaternion.Euler(0,0,90));
             anim.SetInteger("isJump", curJump);
         }
 
@@ -236,6 +240,7 @@ public class Player : Unit
     {
         isDash = true;
         anim.SetBool("isDash", isDash);
+        Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? 0.5f : -0.5f, 0,0), Quaternion.identity);
 
         for (int i = 0; i < 3; i++)
         {
