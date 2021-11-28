@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            transform.position +=
+            player.transform.position +=
                 new Vector3((transform.localScale.x < 0 ? -10 : 10) * 10 * Time.deltaTime, 0, 0);
         }
 
