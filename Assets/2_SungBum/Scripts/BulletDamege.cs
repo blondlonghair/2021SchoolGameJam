@@ -22,7 +22,7 @@ public class BulletDamege : MonoBehaviour // 총알 데미지 스크립트
     {
         if(other.gameObject.CompareTag("Player")) // 플레이어 맞았을 때 데미지 넣고 사라짐
         {
-            other.gameObject.GetComponent<Player>().OnHit(null, 20);
+            other.gameObject.GetComponent<Player>().OnHit(null, BulletDg);
             Destroy();
         }
     }

@@ -37,6 +37,8 @@ public class KnifeEnemy : Unit
 
     [SerializeField] public int PlayerAttackDmg = 0;
 
+    public Animator animator;
+
     private void Awake()
     {
         BasePosMax.x = this.gameObject.transform.position.x + 3.5f;
@@ -53,6 +55,8 @@ public class KnifeEnemy : Unit
 
         else if(this.gameObject.tag == "GunEnemy") // ¿ø°Å¸® ¾î±×·Î ¹üÀ§
             MaxPlayerDis = 8;
+
+        animator = this.gameObject.GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -92,19 +96,39 @@ public class KnifeEnemy : Unit
     {
         if(TargetChk == true && AttackTiming == false) // ê°€?œê±°ë¦¬ë‚´ playerê°€ ?ˆì„???€ì§ì´ê³? ?¬ì • ê±°ë¦¬???ˆìœ¼ë©?ë©ˆì¶¤
         {
+            Run();
             //Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
 
-            if (TargetMove < 0) this.gameObject.transform.Translate(-MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
+            if (TargetMove < 0)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                this.gameObject.transform.Translate(-MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
+            }
 
-            else this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
+            }
         }
 
         if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //?¤í° ?„ì¹˜?ì„œ ë©€ë¦??¨ì–´ì¡Œì„?????ë¦¬ë¡??Œì•„ê°?
         {
+            Walk();
             //Debug.Log("Target");
             BaseChk = true;
             this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime); 
+
+            if(BasePos.x - this.gameObject.transform.position.x < 0)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            }
+
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            }
 
             if (BaseDis < 0.3) // ´Ù½Ã º£ÀÌ½º À§Ä¡·Î ¿ÔÀ» ¶§ ·£´ı ÀÌµ¿
             {
@@ -115,6 +139,8 @@ public class KnifeEnemy : Unit
 
         if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : 0?¼ë•Œ ê°€ë§Œíˆ
         {
+            Wait();
+
             //Debug.Log("Wait");
             if (Waits > 0)
                 Waits -= Time.deltaTime * 0.1f;
@@ -128,7 +154,9 @@ public class KnifeEnemy : Unit
 
         else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : 1?¼ë•Œ ?¤ë¥¸ìª?
         {
+            Walk();
             //Debug.Log("Right");
+            this.gameObject.GetComponent<SpriteRenderer>().flipX = true;
             if (MoveCheck == false) // ÀÌµ¿ À§Ä¡ Á¤ÇØÁÜ
             {
                 Waits = 0.3f;
@@ -149,10 +177,15 @@ public class KnifeEnemy : Unit
                 RanDir = Random.Range(-1, 2);
                 MoveCheck = false;
             }
+
+            else
+                Wait();
         }
 
         else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : -1?¼ë•Œ ?¼ìª½
         {
+            Walk();
+            this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
             //Debug.Log("Left");
             if (MoveCheck == false)
             {
@@ -174,6 +207,9 @@ public class KnifeEnemy : Unit
                 RanDir = Random.Range(-1, 2);
                 MoveCheck = false;
             }
+
+            else
+                Wait();
         }
     }
 
@@ -192,5 +228,26 @@ public class KnifeEnemy : Unit
     {
         this.gameObject.transform.Translate(-MoveSpeed * Time.deltaTime, 0.0f, 0.0f);
         yield return YieldCache.WaitForSeconds(0.01f);
+    }
+
+    void Walk()
+    {
+        animator.SetBool("Walk", true);
+        animator.SetBool("Run", false);
+        animator.SetBool("wait", false);
+    }
+
+    void Run()
+    {
+        animator.SetBool("Walk", false);
+        animator.SetBool("Run", true);
+        animator.SetBool("wait", false);
+    }
+
+    void Wait()
+    {
+        animator.SetBool("Walk", false);
+        animator.SetBool("Run", false);
+        animator.SetBool("wait", true);
     }
 }

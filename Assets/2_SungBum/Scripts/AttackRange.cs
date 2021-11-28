@@ -78,9 +78,13 @@ public class AttackRange : MonoBehaviour
 
                 if (AttackDel <= 0.0f) // 쿨돌면 공격
                 {
+                    AttackPly();
                     AttackDel = BaseAttackDel;
                     StartCoroutine("KnifeEnemyAtk");
                 }
+
+                else if (AttackDel <= 0.6f)
+                    AtkReady();
             }
 
             else if (Enemy.gameObject.tag == "GunEnemy") // 원거리 몹 일때
@@ -97,11 +101,15 @@ public class AttackRange : MonoBehaviour
 
                 if (AttackDel <= 0.0f) // 총알 발사
                 {
+                    AttackPly();
                     AttackDel = BaseAttackDel + GunDelPlus;
                     GameObject Bullet = Instantiate(PFBullet, transform.position, Quaternion.Euler(0f, 0f, rotateDg));
                     Bullet.GetComponent<BulletDamege>(). BulletDg = BulletDmg;
                     Bullet.GetComponent<Rigidbody2D>().AddForce(dir * BulletPower, ForceMode2D.Impulse);
                 }
+
+                else if(AttackDel <= 0.85f)
+                    AtkReady();
             }
         }
     }
@@ -110,6 +118,7 @@ public class AttackRange : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            GoRun(); ;
             if (Enemy.gameObject.tag == "KnifeEnemy") // 근접 몹 일때
             {
                 Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
@@ -130,5 +139,24 @@ public class AttackRange : MonoBehaviour
     {
         Enemy.GetComponent<KnifeEnemy>().PlayerAttack(); // 근접 공격 성공했을 때 부모 스크립트에 있는 공격 함수 실행
         yield return YieldCache.WaitForSeconds(0.01f);
+    }
+
+    void AtkReady()
+    {
+        Enemy.GetComponent <KnifeEnemy>().animator.SetBool("AtkReady",true);
+        Enemy.GetComponent <KnifeEnemy>().animator.SetBool("Attack",false);
+        Enemy.GetComponent <KnifeEnemy>().animator.SetBool("Run",false);
+    }
+
+    void AttackPly()
+    {
+        Enemy.GetComponent<KnifeEnemy>().animator.SetBool("Attack", true);
+    }
+
+    void GoRun()
+    {
+        Enemy.GetComponent<KnifeEnemy>().animator.SetBool("AtkReady", false);
+        Enemy.GetComponent<KnifeEnemy>().animator.SetBool("Attack", false);
+        Enemy.GetComponent<KnifeEnemy>().animator.SetBool("Run", true);
     }
 }
