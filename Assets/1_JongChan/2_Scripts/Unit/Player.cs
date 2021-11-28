@@ -16,9 +16,6 @@ public class Player : Unit
     [SerializeField] private int maxJump;
     [SerializeField] private bool isDash;
 
-    [Header("ref")] 
-    [SerializeField] private GameObject bullet;
-
     [Header("타이머")] 
     [SerializeField] private float dashTimer = 1;
     [SerializeField] private float dashInterval = 1;
@@ -219,7 +216,7 @@ public class Player : Unit
 
     public void Skill2_Shot()
     {
-        Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.localScale.x > 0 ? 0 : 180));
+        weapon.Skill2();
     }
 
     public void Attack_CheckPosition()
@@ -244,7 +241,7 @@ public class Player : Unit
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             transform.position +=
-                new Vector3((transform.localScale.x < 0 ? -moveSpeed : moveSpeed) * 10 * Time.deltaTime, 0, 0);
+                new Vector3((transform.localScale.x < 0 ? -moveSpeed : moveSpeed) * 5 * Time.deltaTime, 0, 0);
         }
 
         isDash = false;
