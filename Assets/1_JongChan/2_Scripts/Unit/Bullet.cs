@@ -13,9 +13,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<Unit>(out var unit) && unit.kind == Unit.Kind.Monster)
+        if (other.TryGetComponent(out Unit unit) && unit.kind == Unit.Kind.Monster)
         {
             unit.OnHit(new Player(), 30);
+            
             Destroy(gameObject);
         }
     }

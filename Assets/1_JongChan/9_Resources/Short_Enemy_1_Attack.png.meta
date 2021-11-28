@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: dfffe378d0d01bb469fe87652daf1487
+guid: 369822ec61202f04f98a411e8c92f692
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2540389110289181886
-    second: JumpAttack_0
+      213: -5323029013835155150
+    second: Short_Enemy_1_Attack_0
   - first:
-      213: 8483976198845052953
-    second: JumpAttack_1
+      213: -3671000436537496919
+    second: Short_Enemy_1_Attack_1
   - first:
-      213: 3541691981770530940
-    second: JumpAttack_2
+      213: -5115218012562476609
+    second: Short_Enemy_1_Attack_2
   - first:
-      213: -3297658120855038214
-    second: JumpAttack_3
-  - first:
-      213: -8835444115165061092
-    second: JumpAttack_4
+      213: -3619139362882178973
+    second: Short_Enemy_1_Attack_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -106,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: JumpAttack_0
+      name: Short_Enemy_1_Attack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 52
-        height: 48
+        width: 45
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,20 +117,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebcae0eaf66414320800000000000000
-      internalID: 2540389110289181886
+      spriteID: 239f145805dc026b0800000000000000
+      internalID: -5323029013835155150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpAttack_1
+      name: Short_Enemy_1_Attack_1
       rect:
         serializedVersion: 2
-        x: 52
+        x: 45
         y: 0
-        width: 52
-        height: 48
+        width: 45
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 918370f17632db570800000000000000
-      internalID: 8483976198845052953
+      spriteID: 9aae0e18d8cfd0dc0800000000000000
+      internalID: -3671000436537496919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpAttack_2
+      name: Short_Enemy_1_Attack_2
       rect:
         serializedVersion: 2
-        x: 104
+        x: 90
         y: 0
-        width: 52
-        height: 48
+        width: 45
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c70284db71e962130800000000000000
-      internalID: 3541691981770530940
+      spriteID: fb1b884b1581309b0800000000000000
+      internalID: -5115218012562476609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpAttack_3
+      name: Short_Enemy_1_Attack_3
       rect:
         serializedVersion: 2
-        x: 156
+        x: 135
         y: 0
-        width: 52
-        height: 48
+        width: 45
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,29 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af6d0cb296d5c32d0800000000000000
-      internalID: -3297658120855038214
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: JumpAttack_4
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 0
-        width: 52
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1065c2b362326580800000000000000
-      internalID: -8835444115165061092
+      spriteID: 36036caaceb36cdc0800000000000000
+      internalID: -3619139362882178973
       vertices: []
       indices: 
       edges: []

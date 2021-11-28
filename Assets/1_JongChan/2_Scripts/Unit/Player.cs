@@ -110,9 +110,6 @@ public class Player : Unit
             anim.SetBool("isRun", false);
         }
         
-
-        
-        
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
@@ -213,7 +210,7 @@ public class Player : Unit
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.name == "Ground")
+        if (other.gameObject.name == "Tilemap")
         {
             curJump = 0;
             anim.SetInteger("isJump", curJump);
