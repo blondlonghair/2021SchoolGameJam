@@ -31,9 +31,11 @@ public class KnifeEnemy : Unit
 
     Vector2 PlayerPos;
     public float PlayerDis;
-    public int MaxPlayerDis = 6;
+    public int MaxPlayerDis;
     
     public float TargetMove;
+
+    [SerializeField] public int PlayerAttackDmg = 0;
 
     private void Awake()
     {
@@ -45,6 +47,12 @@ public class KnifeEnemy : Unit
 
         Player = GameObject.FindWithTag("Player");
         player = Player.GetComponent<Player>();
+
+        if (this.gameObject.tag == "KnifeEnemy") // ±ÙÁ¢ ¾î±×·Î ¹üÀ§
+            MaxPlayerDis = 4;
+
+        else if(this.gameObject.tag == "GunEnemy") // ¿ø°Å¸® ¾î±×·Î ¹üÀ§
+            MaxPlayerDis = 8;
     }
 
     // Start is called before the first frame update
@@ -66,14 +74,14 @@ public class KnifeEnemy : Unit
 
         PlayerDis = Vector2.Distance(PlayerPos, CurPos);
 
-        Debug.Log(TargetChk);
+        //Debug.Log(TargetChk);
 
-        if (PlayerDis < MaxPlayerDis)
+        if (PlayerDis < MaxPlayerDis) // ¾î±×·Î ²ø·ÈÀ» ¶§ 
             TargetChk = true;
 
-        else if(PlayerDis > MaxPlayerDis && TargetChk == true)
+        else if(PlayerDis > MaxPlayerDis && TargetChk == true) // ¾î±×·Î Ç®·ÈÀ» ¶§ ´Ù½Ã º£ÀÌ½º À§Ä¡ Àâ¾ÆÁÜ
         {
-            Debug.Log("TargetFalse");
+            //Debug.Log("TargetFalse");
             BasePos = CurPos;
             TargetChk = false;
         }
@@ -82,9 +90,9 @@ public class KnifeEnemy : Unit
 
     public void EnemyMove()
     {
-        if(TargetChk == true && AttackTiming == false) // °¡½Ã°Å¸®³» player°¡ ÀÖÀ»¶§ ¿òÁ÷ÀÌ°í, »çÁ¤ °Å¸®³» ÀÖÀ¸¸é ¸ØÃã
+        if(TargetChk == true && AttackTiming == false) // ê°€?œê±°ë¦¬ë‚´ playerê°€ ?ˆì„???€ì§ì´ê³? ?¬ì • ê±°ë¦¬???ˆìœ¼ë©?ë©ˆì¶¤
         {
-            Debug.Log("Attack");
+            //Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
 
             if (TargetMove < 0) this.gameObject.transform.Translate(-MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
@@ -92,22 +100,21 @@ public class KnifeEnemy : Unit
             else this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
         }
 
-        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //½ºÆù À§Ä¡¿¡¼­ ¸Ö¸® ¶³¾îÁ³À»¶§ ¿ø ÀÚ¸®·Î µ¹¾Æ°¨
+        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //?¤í° ?„ì¹˜?ì„œ ë©€ë¦??¨ì–´ì¡Œì„?????ë¦¬ë¡??Œì•„ê°?
         {
-            Debug.Log("Target");
+            //Debug.Log("Target");
             BaseChk = true;
-            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime);
+            this.gameObject.transform.position = Vector2.MoveTowards(this.gameObject.transform.position, BasePos, 1.3f * Time.deltaTime); 
 
-            if (BaseDis < 0.3)
+            if (BaseDis < 0.3) // ´Ù½Ã º£ÀÌ½º À§Ä¡·Î ¿ÔÀ» ¶§ ·£´ı ÀÌµ¿
             {
                 BaseChk = false;
                 RanDir = Random.Range(-1, 2);
             }
         }
 
-        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : 0ÀÏ¶§ °¡¸¸È÷
+        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : 0?¼ë•Œ ê°€ë§Œíˆ
         {
-            Debug.Log("wait");
             //Debug.Log("Wait");
             if (Waits > 0)
                 Waits -= Time.deltaTime * 0.1f;
@@ -119,10 +126,10 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : 1ÀÏ¶§ ¿À¸¥ÂÊ
+        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : 1?¼ë•Œ ?¤ë¥¸ìª?
         {
-            Debug.Log("Right");
-            if (MoveCheck == false)
+            //Debug.Log("Right");
+            if (MoveCheck == false) // ÀÌµ¿ À§Ä¡ Á¤ÇØÁÜ
             {
                 Waits = 0.3f;
                 MoveCheck = true;
@@ -137,16 +144,16 @@ public class KnifeEnemy : Unit
                 StartCoroutine("RightMove");
             }
 
-            else if(Waits < 0 && CurPos.x >= MaxPos.x)
+            else if(Waits < 0 && CurPos.x >= MaxPos.x) // ´Ù ¿òÁ÷¿´À» ¶§ ´Ù½Ã ·£´ı
             {
                 RanDir = Random.Range(-1, 2);
                 MoveCheck = false;
             }
         }
 
-        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ·£´ı ¿òÁ÷ÀÓ : -1ÀÏ¶§ ¿ŞÂÊ
+        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?œë¤ ?€ì§ì„ : -1?¼ë•Œ ?¼ìª½
         {
-            Debug.Log("Left");
+            //Debug.Log("Left");
             if (MoveCheck == false)
             {
                 Waits = 0.3f;
@@ -170,9 +177,9 @@ public class KnifeEnemy : Unit
         }
     }
 
-    public void PlayerAttack()
+    public void PlayerAttack() // ÇÃ·¹ÀÌ¾î °ø°İ
     {
-        player.OnHit(this, 20);
+        player.OnHit(this, PlayerAttackDmg);
     }
 
     IEnumerator RightMove()
