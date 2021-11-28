@@ -35,6 +35,8 @@ public class KnifeEnemy : Unit
     
     public float TargetMove;
 
+    [SerializeField] public int PlayerAttackDmg = 0;
+
     private void Awake()
     {
         BasePosMax.x = this.gameObject.transform.position.x + 3.5f;
@@ -88,7 +90,7 @@ public class KnifeEnemy : Unit
 
     public void EnemyMove()
     {
-        if(TargetChk == true && AttackTiming == false) // 가시거리내 player가 있을때 움직이고, 사정 거리내 있으면 멈춤
+        if(TargetChk == true && AttackTiming == false) // 가?�거리내 player가 ?�을???�직이�? ?�정 거리???�으�?멈춤
         {
             //Debug.Log("Attack");
             TargetMove = PlayerPos.x - CurPos.x;
@@ -98,7 +100,7 @@ public class KnifeEnemy : Unit
             else this.gameObject.transform.Translate(MoveSpeed * 2.5f * Time.deltaTime, 0.0f, 0.0f);
         }
 
-        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //스폰 위치에서 멀리 떨어졌을때 원 자리로 돌아감
+        if ((BaseDis > MaxBaseDis || BaseChk == true) && TargetChk == false && AttackTiming == false) //?�폰 ?�치?�서 멀�??�어졌을?????�리�??�아�?
         {
             //Debug.Log("Target");
             BaseChk = true;
@@ -111,7 +113,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 0일때 가만히
+        if (RanDir == 0 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?�덤 ?�직임 : 0?�때 가만히
         {
             //Debug.Log("Wait");
             if (Waits > 0)
@@ -124,7 +126,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : 1일때 오른쪽
+        else if(RanDir == 1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?�덤 ?�직임 : 1?�때 ?�른�?
         {
             //Debug.Log("Right");
             if (MoveCheck == false) // �̵� ��ġ ������
@@ -149,7 +151,7 @@ public class KnifeEnemy : Unit
             }
         }
 
-        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // 랜덤 움직임 : -1일때 왼쪽
+        else if(RanDir == -1 && BaseChk == false && TargetChk == false && AttackTiming == false) // ?�덤 ?�직임 : -1?�때 ?�쪽
         {
             //Debug.Log("Left");
             if (MoveCheck == false)
@@ -177,7 +179,7 @@ public class KnifeEnemy : Unit
 
     public void PlayerAttack() // �÷��̾� ����
     {
-        player.OnHit(this, 20);
+        player.OnHit(this, PlayerAttackDmg);
     }
 
     IEnumerator RightMove()

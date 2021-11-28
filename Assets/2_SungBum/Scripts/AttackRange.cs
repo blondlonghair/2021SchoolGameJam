@@ -5,8 +5,16 @@ using UnityEngine;
 public class AttackRange : MonoBehaviour
 {
     GameObject Enemy; // 부모 객체
-    float AttackDel = 0.7f; // 공격 딜레이
-    bool Attack = false; // 공격 딜레이
+
+    public float AttackDel = 0; // 현재 공격 딜레이
+    public float BaseAttackDel = 0.7f; // 기본 공격 딜레이
+    public float GunDelPlus = 0.2f; // 원거리 딜레이 추가량
+
+    bool Attack = false; // 공격 가능 판정
+
+    public int BulletDmg = 20; // 총 딜
+    public int BulletPower = 15; // 총알 속도
+    public int KnifeDmg = 30; // 근접 딜
 
     float dy;
     float dx;
@@ -14,11 +22,26 @@ public class AttackRange : MonoBehaviour
     float rotateDg; // 총알 각도
     public GameObject PFBullet; // 원거리용 총알
 
+    private void Awake()
+    {
+        Enemy = transform.parent.gameObject;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Enemy = transform.parent.gameObject;
+        if (Enemy.gameObject.tag == "KnifeEnemy") // 근접 몹 일때
+        {
+            AttackDel = BaseAttackDel;
+        }
+
+        else if (Enemy.gameObject.tag == "GunEnemy") // 원거리 몹 일때
+        {
+            AttackDel = BaseAttackDel + GunDelPlus;
+        }
+
         playerPos = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        Enemy.GetComponent<KnifeEnemy>().PlayerAttackDmg = KnifeDmg;
     }
 
     // Update is called once per frame
@@ -40,21 +63,6 @@ public class AttackRange : MonoBehaviour
             }
         }
 
-        else if (Enemy.gameObject.tag == "KnifeEnemy") // 근접 몹 일때
-        {
-            if (Enemy.GetComponent<KnifeEnemy>().PlayerDis < Enemy.GetComponent<KnifeEnemy>().MaxPlayerDis)
-            {
-                if (Enemy.GetComponent<KnifeEnemy>().TargetMove > 0)
-                {
-                    this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(0.75f, 0.0f); // 플레이어 위치에 따라 콜라이더 위치 변경
-                }
-
-                else
-                {
-                    this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(-0.75f, 0.0f);
-                }
-            }
-        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -70,7 +78,7 @@ public class AttackRange : MonoBehaviour
 
                 if (AttackDel <= 0.0f) // 쿨돌면 공격
                 {
-                    AttackDel = 0.7f;
+                    AttackDel = BaseAttackDel;
                     StartCoroutine("KnifeEnemyAtk");
                 }
             }
@@ -89,9 +97,10 @@ public class AttackRange : MonoBehaviour
 
                 if (AttackDel <= 0.0f) // 총알 발사
                 {
-                    AttackDel = 0.4f;
+                    AttackDel = BaseAttackDel + GunDelPlus;
                     GameObject Bullet = Instantiate(PFBullet, transform.position, Quaternion.Euler(0f, 0f, rotateDg));
-                    Bullet.GetComponent<Rigidbody2D>().AddForce(dir * 10, ForceMode2D.Impulse);
+                    Bullet.GetComponent<BulletDamege>(). BulletDg = BulletDmg;
+                    Bullet.GetComponent<Rigidbody2D>().AddForce(dir * BulletPower, ForceMode2D.Impulse);
                 }
             }
         }
@@ -105,14 +114,14 @@ public class AttackRange : MonoBehaviour
             {
                 Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
                 Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 2.0f;
-                AttackDel = 0.7f;
+                AttackDel = BaseAttackDel;
             }
 
             else if (Enemy.gameObject.tag == "GunEnemy") // 근접 몹 일때
             {
                 Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
                 Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 2.0f;
-                AttackDel = 0.7f;
+                AttackDel = BaseAttackDel + GunDelPlus;
             }
         }
     }    

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletDamege : MonoBehaviour // 총알 데미지 스크립트
 {
+    [SerializeField] public int BulletDg = 0;
+
     // Start is called before the first frame update
     void Start()
     {
