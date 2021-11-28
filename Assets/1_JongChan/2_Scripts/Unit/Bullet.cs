@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -12,12 +13,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<Unit>(out var unit))
+        if (other.TryGetComponent<Unit>(out var unit) && unit.kind == Unit.Kind.Monster)
         {
-            if (unit.kind == Unit.Kind.Monster)
-            {
-                unit.OnHit(new Player(), 30);
-            }
+            unit.OnHit(new Player(), 30);
+            Destroy(gameObject);
         }
     }
 }
