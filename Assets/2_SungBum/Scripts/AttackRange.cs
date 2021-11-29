@@ -73,6 +73,7 @@ public class AttackRange : MonoBehaviour
 
             if (Enemy.gameObject.tag == "KnifeEnemy") // 辟立 各 老锭
             {
+                //Debug.Log("hi");
                 Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 0.0f;
                 AttackDel -= 0.3f * Time.deltaTime; // 酿皑家
 
@@ -89,6 +90,7 @@ public class AttackRange : MonoBehaviour
 
             else if (Enemy.gameObject.tag == "GunEnemy") // 盔芭府 各 老锭
             {
+                Enemy.GetComponent<KnifeEnemy>().AttackTiming = true;
                 Enemy.GetComponent<KnifeEnemy>().MoveSpeed = 0.0f;
                 AttackDel -= 0.3f * Time.deltaTime;
 
@@ -108,7 +110,7 @@ public class AttackRange : MonoBehaviour
                     Bullet.GetComponent<Rigidbody2D>().AddForce(dir * BulletPower, ForceMode2D.Impulse);
                 }
 
-                else if(AttackDel <= 0.85f)
+                else if(AttackDel <= 0.71f)
                     AtkReady();
             }
         }
@@ -118,7 +120,7 @@ public class AttackRange : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GoRun(); ;
+            GoRun();
             if (Enemy.gameObject.tag == "KnifeEnemy") // 辟立 各 老锭
             {
                 Enemy.GetComponent<KnifeEnemy>().AttackTiming = false;
