@@ -25,6 +25,9 @@ public class BulletDamege : MonoBehaviour // 총알 데미지 스크립트
             other.gameObject.GetComponent<Player>().OnHit(null, BulletDg);
             Destroy();
         }
+
+        if(other.gameObject.name == "Tilemap")
+            Destroy(this.gameObject);
     }
 
     void Destroy()
