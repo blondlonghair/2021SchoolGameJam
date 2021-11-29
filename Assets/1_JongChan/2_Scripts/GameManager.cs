@@ -9,11 +9,6 @@ public class GameManager : SingletonMono<GameManager>
     [SerializeField] private Player player;
     [SerializeField] private LerpSlider hpBar;
     
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         skill1IconUI.SetValue(1 - (player.skill1Timer / player.skill1Interval));

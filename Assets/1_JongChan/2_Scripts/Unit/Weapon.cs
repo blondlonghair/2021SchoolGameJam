@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     
     private Player player;
     private Collider2D collider;
+    private Rigidbody2D playerRigidbody2D;
     private bool isSkill1;
 
     [SerializeField] private GameObject bullet;
@@ -21,6 +22,7 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         transform.parent.TryGetComponent(out player);
+        transform.parent.TryGetComponent(out playerRigidbody2D);
         TryGetComponent(out collider);
     }
 
@@ -53,12 +55,18 @@ public class Weapon : MonoBehaviour
         collider.enabled = true;
         isSkill1 = true;
         
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            player.transform.Translate((player.transform.localScale.x < 0 ? -10 : 10) * 10 * Time.deltaTime, 0, 0);
+            playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100), ForceMode2D.Impulse);
+
+            // player.transform.Translate((player.transform.localScale.x < 0 ? -10 : 10) * 10 * Time.deltaTime, 0, 0);
         }
 
+        
+        yield return YieldCache.WaitForSeconds(0.1f);
+        playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.normalized.x * 0f, playerRigidbody2D.velocity.y);
+        
         collider.enabled = false;
         isSkill1 = false;
         yield return null;

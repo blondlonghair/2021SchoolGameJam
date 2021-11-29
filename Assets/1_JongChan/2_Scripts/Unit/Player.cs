@@ -40,7 +40,7 @@ public class Player : Unit
 
         keyDictionary = new Dictionary<KeyCode, Action>
         {
-            {KeyCode.Space, Jump},
+            {KeyCode.LeftAlt, Jump},
             {KeyCode.X, Dash},
             {KeyCode.A, Skill_1},
             {KeyCode.S, Skill_2}
@@ -245,9 +245,12 @@ public class Player : Unit
         for (int i = 0; i < 3; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            transform.position +=
-                new Vector3((transform.localScale.x < 0 ? -moveSpeed : moveSpeed) * 5 * Time.deltaTime, 0, 0);
+            
+            rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100), ForceMode2D.Impulse);
         }
+
+        yield return YieldCache.WaitForSeconds(0.1f);
+        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
 
         isDash = false;
         anim.SetBool("isDash", isDash);
