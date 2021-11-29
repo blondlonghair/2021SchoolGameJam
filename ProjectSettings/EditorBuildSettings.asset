@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/1_JongChan/1_Scene/JongChan.unity
-    guid: 51622362991feb8448850b1624000e99
+    path: Assets/Scenes/Title.unity
+    guid: 99edfaed88128ee4fba9fb0be21760e7
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: aaa9bf4f78d20484bbfc8492b618eecc
   m_configObjects: {}

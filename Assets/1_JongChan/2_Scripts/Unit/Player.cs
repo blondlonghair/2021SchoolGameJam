@@ -96,13 +96,13 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            rigidbody2D.AddForce(Vector2.left, ForceMode2D.Impulse);
+            rigidbody2D.AddForce(Vector2.left * Time.deltaTime * 100, ForceMode2D.Impulse);
             anim.SetBool("isRun", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(1,1,1);
-            rigidbody2D.AddForce(Vector2.right, ForceMode2D.Impulse);
+            rigidbody2D.AddForce(Vector2.right * Time.deltaTime * 100, ForceMode2D.Impulse);
             anim.SetBool("isRun", true);
         }
         else
@@ -246,7 +246,7 @@ public class Player : Unit
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             
-            rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100), ForceMode2D.Impulse);
+            rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 10, ForceMode2D.Impulse);
         }
 
         yield return YieldCache.WaitForSeconds(0.1f);

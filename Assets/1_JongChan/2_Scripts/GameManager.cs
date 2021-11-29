@@ -13,7 +13,7 @@ public class GameManager : SingletonMono<GameManager>
     [SerializeField] private LerpSlider hpBar;
     [SerializeField] private GameObject hitEffect;
 
-    [SerializeField] private GameObject PausePanel;
+    [SerializeField] private GameObject pausePanel;
 
     private Image hitEffectSpriteImage;
     private Color hitEffectColor;
@@ -35,8 +35,15 @@ public class GameManager : SingletonMono<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
+            Time.timeScale = 0;
+            pausePanel.SetActive(true);
         }
+    }
+
+    public void PauseButton()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
     }
 
     public void HitEffect()

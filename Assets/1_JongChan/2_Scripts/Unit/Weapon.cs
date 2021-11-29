@@ -55,10 +55,10 @@ public class Weapon : MonoBehaviour
         collider.enabled = true;
         isSkill1 = true;
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100), ForceMode2D.Impulse);
+            playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 10, ForceMode2D.Impulse);
 
             // player.transform.Translate((player.transform.localScale.x < 0 ? -10 : 10) * 10 * Time.deltaTime, 0, 0);
         }
