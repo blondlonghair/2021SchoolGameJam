@@ -37,7 +37,7 @@ public class Weapon : MonoBehaviour
 
     public void Skill2()
     {
-        Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, transform.localScale.x > 0 ? 0 : 180));
+        Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, player.transform.localScale.x > 0 ? 0 : 180));
     }
     
     IEnumerator Co_Attack()

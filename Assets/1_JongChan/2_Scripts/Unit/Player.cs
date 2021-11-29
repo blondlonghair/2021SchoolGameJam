@@ -17,14 +17,14 @@ public class Player : Unit
     [SerializeField] private bool isDash;
 
     [Header("타이머")] 
-    [SerializeField] private float dashTimer = 1;
-    [SerializeField] private float dashInterval = 1;
-    [SerializeField] private float atkTimer = 0.5f;
-    [SerializeField] private float atkInterval = 0.5f;
-    [SerializeField] private float skill1Timer = 10;
-    [SerializeField] private float skill1Interval = 10;
-    [SerializeField] private float skill2Timer = 20;
-    [SerializeField] private float skill2Interval = 20;
+    [SerializeField] public float dashTimer = 1;
+    [SerializeField] public float dashInterval = 1;
+    [SerializeField] public float atkTimer = 0.5f;
+    [SerializeField] public float atkInterval = 0.5f;
+    [SerializeField] public float skill1Timer = 10;
+    [SerializeField] public float skill1Interval = 10;
+    [SerializeField] public float skill2Timer = 20;
+    [SerializeField] public float skill2Interval = 20;
 
     [Header("참조")] 
     [SerializeField] private GameObject dashEffect;

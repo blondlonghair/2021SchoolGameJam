@@ -116,7 +116,7 @@ MonoBehaviour:
   skill1Interval: 10
   skill2Timer: 20
   skill2Interval: 20
-  dashEffect: {fileID: 0}
+  dashEffect: {fileID: 2845966512784884312, guid: eedeb2dc0860241409bb150f9323cf96, type: 3}
 --- !u!95 &5078933010676614770
 Animator:
   serializedVersion: 3

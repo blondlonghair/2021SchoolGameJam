@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class TitleScene : MonoBehaviour
     private Title titleState;
     private Color black;
     private Color title;
+    private bool isOnOff;
     
     void Start()
     {
@@ -56,7 +59,29 @@ public class TitleScene : MonoBehaviour
     {
         if (titleText.color.a < 0.01)
         {
-            title.
+            isOnOff = true;
+        }
+
+        if (titleText.color.a > 0.99)
+        {
+            isOnOff = false;
+        }
+
+        if (isOnOff)
+        {
+            title.a += 0.01f;
+            titleText.color = title;
+        }
+
+        else
+        {
+            title.a -= 0.01f;
+            titleText.color = title;
+        }
+
+        if (Input.anyKey)
+        {
+            SceneManager.LoadScene("Scenes/Stage1");
         }
     }
 
