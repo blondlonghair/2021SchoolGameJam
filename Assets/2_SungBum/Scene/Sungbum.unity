@@ -356,22 +356,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GunEnemy2
       objectReference: {fileID: 0}
-    - target: {fileID: 6810519601983166176, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6810519601983166180, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6810519601983166181, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_Constraints
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6810519601983166181, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6810519601983166186, guid: fd50d210391c6ad449c174f108a55739, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -416,22 +400,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6810519601983166187, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6810519603392268864, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: PFBullet
-      value: 
-      objectReference: {fileID: 1326766575822514663, guid: 8eb45ba4c4d85084c9cc3cddea09e4e8, type: 3}
-    - target: {fileID: 6810519603392268866, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6810519603392268870, guid: fd50d210391c6ad449c174f108a55739, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd50d210391c6ad449c174f108a55739, type: 3}
 --- !u!1001 &1338465647
@@ -444,26 +412,6 @@ PrefabInstance:
     - target: {fileID: 2845157915178089606, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
       propertyPath: m_Name
       value: KnifeEnemy2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089606, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089608, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089608, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089608, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089609, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_GravityScale
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2845157915178089610, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
       propertyPath: m_RootOrder
@@ -508,14 +456,6 @@ PrefabInstance:
     - target: {fileID: 2845157915178089610, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845157915178089611, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a83f00bb87c8b4c40a3a4afa5e137770, type: 3}
-    - target: {fileID: 2845157915178089611, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
@@ -916,7 +856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3319813245336750985, guid: 884ee7901f177424097a558e8596bb40, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 884ee7901f177424097a558e8596bb40, type: 3}
@@ -927,14 +867,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4144401378963423472, guid: b4530acc268426948b1bfab02651c77f, type: 3}
-      propertyPath: KnifeEffect
-      value: 
-      objectReference: {fileID: 7078035248540019161, guid: 8e86cc8399ed3f84f8e8384e737986bb, type: 3}
-    - target: {fileID: 4144401378963423478, guid: b4530acc268426948b1bfab02651c77f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4144401378963423479, guid: b4530acc268426948b1bfab02651c77f, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -982,10 +914,6 @@ PrefabInstance:
     - target: {fileID: 4144401378963423483, guid: b4530acc268426948b1bfab02651c77f, type: 3}
       propertyPath: m_Name
       value: KnifeEnemy1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144401378963423483, guid: b4530acc268426948b1bfab02651c77f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4530acc268426948b1bfab02651c77f, type: 3}
