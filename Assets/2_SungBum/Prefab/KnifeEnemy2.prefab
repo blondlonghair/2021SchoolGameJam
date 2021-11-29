@@ -163,6 +163,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   GroundChk: 1
   KnifeEffect: {fileID: 7078035248540019161, guid: 8e86cc8399ed3f84f8e8384e737986bb, type: 3}
+  EnemyDieEffect: {fileID: 9221052383735000292, guid: 1a1778562307b5e4d8072281b8f11d5b, type: 3}
 --- !u!114 &2845157915178089612
 MonoBehaviour:
   m_ObjectHideFlags: 0

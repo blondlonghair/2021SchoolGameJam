@@ -157,6 +157,11 @@ MonoBehaviour:
   PlayerDis: 0
   MaxPlayerDis: 6
   TargetMove: 0
+  PlayerAttackDmg: 0
+  animator: {fileID: 0}
+  GroundChk: 1
+  KnifeEffect: {fileID: 0}
+  EnemyDieEffect: {fileID: 9221052383735000292, guid: 1a1778562307b5e4d8072281b8f11d5b, type: 3}
 --- !u!114 &6108086149350634650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +248,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 020455b1994574f41a25da678a9d10e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackDel: 0
+  BaseAttackDel: 0.7
+  GunDelPlus: 0.2
+  BulletDmg: 20
+  BulletPower: 15
+  KnifeDmg: 30
   PFBullet: {fileID: 5316998176738402182, guid: 7ea7f353587ee5f47a7f1284c43496a2, type: 3}
 --- !u!58 &6108086149954824251
 CircleCollider2D:

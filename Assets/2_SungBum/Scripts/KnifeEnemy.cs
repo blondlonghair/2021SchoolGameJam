@@ -42,6 +42,7 @@ public class KnifeEnemy : Unit
     float Waitcool = 0.0f; //  어그로 풀림 제한 시간
 
     public GameObject KnifeEffect; // 근거리 적 이펙트
+    public GameObject EnemyDieEffect; // 근거리 적 이펙트
 
     private void Awake()
     {
@@ -126,6 +127,12 @@ public class KnifeEnemy : Unit
         //        }
         //    }
         //}
+
+    public override void OnDead(Unit from) //에네미 죽음 이펙트
+    {
+        Instantiate(EnemyDieEffect,this.gameObject.transform.position,this.gameObject.transform.rotation);
+        Destroy(gameObject);
+    }
 
     public void EnemyMove()
     {
