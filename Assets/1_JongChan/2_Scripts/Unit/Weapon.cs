@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     
     public void Skill1()
     {
-        Instantiate(skill1Effect, transform.position + new Vector3(player.transform.localScale.x > 0 ? 5 : -5, 0,0), Quaternion.identity);
+        Instantiate(skill1Effect, transform.position + new Vector3(player.transform.localScale.x > 0 ? 5 : -5,0), Quaternion.Euler(0, player.transform.localScale.x > 0 ? 0 : 180, 0));
         StartCoroutine(Co_Skill1());
     }
 

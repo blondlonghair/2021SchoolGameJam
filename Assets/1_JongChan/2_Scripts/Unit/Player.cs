@@ -255,4 +255,10 @@ public class Player : Unit
         isDash = false;
         anim.SetBool("isDash", isDash);
     }
+
+    public override void OnHit(Unit attacker, int power)
+    {
+        GameManager.In.HitEffect();
+        base.OnHit(attacker, power);
+    }
 }
