@@ -58,14 +58,15 @@ public class Weapon : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 10, ForceMode2D.Impulse);
+            // playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 100, ForceMode2D.Impulse);
+            player.transform.Translate(new Vector3((player.transform.localScale.x > 0 ? 1 : -1), 0, 0));
 
             // player.transform.Translate((player.transform.localScale.x < 0 ? -10 : 10) * 10 * Time.deltaTime, 0, 0);
         }
 
         
         yield return YieldCache.WaitForSeconds(0.1f);
-        playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.normalized.x * 0f, playerRigidbody2D.velocity.y);
+        // playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.normalized.x * 0f, playerRigidbody2D.velocity.y);
         
         collider.enabled = false;
         isSkill1 = false;
@@ -76,14 +77,15 @@ public class Weapon : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Unit enemy) && enemy.kind == Unit.Kind.Monster)
         {
-            enemy.OnHit(player, (int)damage);
             
             if (isSkill1)
             {
+                enemy.OnHit(player, (int)damage * 2);
                 Instantiate(skill1HitEffect, other.transform.position, Quaternion.Euler(0,0,player.localScale.z > 0 ? 0 : 180));
             }
             else
             {
+                enemy.OnHit(player, (int)damage);
                 Instantiate(atkHitEffect, other.transform.position, Quaternion.Euler(0, 0, player.localScale.z > 0 ? 0 : 180));
             }
         }

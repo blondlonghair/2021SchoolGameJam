@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -16,8 +17,7 @@ public class Player : Unit
     [SerializeField] private int maxJump;
     [SerializeField] private bool isDash;
 
-    [Header("타이머")] 
-    [SerializeField] public float dashTimer = 1;
+    [Header("타이머")] [SerializeField] public float dashTimer = 1;
     [SerializeField] public float dashInterval = 1;
     [SerializeField] public float atkTimer = 0.5f;
     [SerializeField] public float atkInterval = 0.5f;
@@ -26,14 +26,13 @@ public class Player : Unit
     [SerializeField] public float skill2Timer = 20;
     [SerializeField] public float skill2Interval = 20;
 
-    [Header("참조")] 
-    [SerializeField] private GameObject dashEffect;
-    
+    [Header("참조")] [SerializeField] private GameObject dashEffect;
+
     //내부
     private Weapon weapon;
     private Animator anim;
     Dictionary<KeyCode, Action> keyDictionary;
-    
+
     protected override void Start()
     {
         base.Start();
@@ -70,25 +69,25 @@ public class Player : Unit
 
         Attack();
 
-        if(Input.anyKeyDown)
+        if (Input.anyKeyDown)
         {
             foreach (var dic in keyDictionary)
             {
-                if(Input.GetKeyDown(dic.Key))
+                if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
                 }
             }
         }
-        
-        if (rigidbody2D.velocity.x > moveSpeed)
-        {
-            rigidbody2D.velocity = new Vector2(moveSpeed, rigidbody2D.velocity.y);
-        }
-        else if (rigidbody2D.velocity.x < moveSpeed * (-1))
-        {
-            rigidbody2D.velocity = new Vector2(moveSpeed * (-1), rigidbody2D.velocity.y);
-        }
+
+        // if (rigidbody2D.velocity.x > moveSpeed)
+        // {
+        //     rigidbody2D.velocity = new Vector2(moveSpeed, rigidbody2D.velocity.y);
+        // }
+        // else if (rigidbody2D.velocity.x < moveSpeed * (-1))
+        // {
+        //     rigidbody2D.velocity = new Vector2(moveSpeed * (-1), rigidbody2D.velocity.y);
+        // }
     }
 
     private void Move()
@@ -96,23 +95,25 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            rigidbody2D.AddForce(Vector2.left * Time.deltaTime * 100, ForceMode2D.Impulse);
+            // rigidbody2D.AddForce(Vector2.left * Time.deltaTime * 100, ForceMode2D.Impulse);
+            transform.Translate(Vector2.left * Time.deltaTime * 10);
             anim.SetBool("isRun", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
-            gameObject.transform.localScale = new Vector3(1,1,1);
-            rigidbody2D.AddForce(Vector2.right * Time.deltaTime * 100, ForceMode2D.Impulse);
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            // rigidbody2D.AddForce(Vector2.right * Time.deltaTime * 100, ForceMode2D.Impulse);
+            transform.Translate(Vector2.right * Time.deltaTime * 10);
             anim.SetBool("isRun", true);
         }
         else
         {
             anim.SetBool("isRun", false);
         }
-        
+
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
+            // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
             anim.SetTrigger("isIdle");
         }
     }
@@ -131,7 +132,7 @@ public class Player : Unit
 
         else if (curJump == 2)
         {
-            Instantiate(dashEffect, transform.position, Quaternion.Euler(0,0,90));
+            Instantiate(dashEffect, transform.position, Quaternion.Euler(0, 0, 90));
             anim.SetInteger("isJump", curJump);
         }
 
@@ -144,7 +145,7 @@ public class Player : Unit
         {
             anim.SetBool("isAttack", true);
         }
-        
+
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (atkTimer < atkInterval) return;
@@ -152,14 +153,16 @@ public class Player : Unit
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                rigidbody2D.AddForce(Vector2.right * -100, ForceMode2D.Impulse);
+                // rigidbody2D.AddForce(Vector2.right * -100, ForceMode2D.Impulse);
+                transform.Translate(Vector2.left);
                 weapon.Attack();
                 print("LeftArrowAtk");
             }
 
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                rigidbody2D.AddForce(Vector2.right * 100, ForceMode2D.Impulse);
+                // rigidbody2D.AddForce(Vector2.right * 100, ForceMode2D.Impulse);
+                transform.Translate(Vector2.right);
                 weapon.Attack();
                 print("RightArrowAtk");
             }
@@ -176,7 +179,7 @@ public class Player : Unit
             atkTimer = 0.5f;
             anim.SetBool("isAttack", false);
         }
-        
+
         if (Input.GetKeyDown(KeyCode.LeftControl) && curJump > 0)
         {
             anim.SetTrigger("isJumpAttack");
@@ -188,7 +191,7 @@ public class Player : Unit
     {
         if (dashTimer < dashInterval) return;
         dashTimer = 0;
-        
+
         StartCoroutine(Co_Dash());
     }
 
@@ -196,7 +199,7 @@ public class Player : Unit
     {
         if (skill1Timer < skill1Interval) return;
         skill1Timer = 0;
-        
+
         anim.SetTrigger("isSkill1");
         weapon.Skill1();
     }
@@ -205,7 +208,7 @@ public class Player : Unit
     {
         if (skill2Timer < skill2Interval) return;
         skill2Timer = 0;
-        
+
         anim.SetTrigger("isSkill2");
     }
 
@@ -228,29 +231,35 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             localScale = new Vector3(-1, 1, 1);
+            Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
+                Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
         }
-        
+
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             localScale = new Vector3(1, 1, 1);
+            Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
+                Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
         }
     }
-    
+
     IEnumerator Co_Dash()
     {
         isDash = true;
         anim.SetBool("isDash", isDash);
-        Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? 0.5f : -0.5f, 0,0), Quaternion.identity);
+        Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? 0.5f : -0.5f, 0, 0),
+            Quaternion.Euler(0,0,transform.localScale.x > 0 ? 180 : 0));
 
         for (int i = 0; i < 3; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            
-            rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 10, ForceMode2D.Impulse);
+            // yield return null;
+            transform.Translate(new Vector3((transform.localScale.x > 0 ? 1 : -1), 0, 0));
+            // rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 50, ForceMode2D.Impulse);
         }
 
         yield return YieldCache.WaitForSeconds(0.1f);
-        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
+        // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
 
         isDash = false;
         anim.SetBool("isDash", isDash);
@@ -260,5 +269,11 @@ public class Player : Unit
     {
         GameManager.In.HitEffect();
         base.OnHit(attacker, power);
+    }
+
+    public override void OnDead(Unit @from)
+    {
+        SceneManager.LoadScene("Scenes/Dead");
+        base.OnDead(@from);
     }
 }

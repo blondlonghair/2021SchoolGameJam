@@ -81,7 +81,7 @@ public class TitleScene : MonoBehaviour
 
         if (Input.anyKey)
         {
-            SceneManager.LoadScene("Scenes/Stage1");
+            SceneManager.LoadScene("Scenes/Intro");
         }
     }
 
