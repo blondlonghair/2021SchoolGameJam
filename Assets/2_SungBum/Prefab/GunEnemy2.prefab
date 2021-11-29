@@ -222,6 +222,7 @@ MonoBehaviour:
   PlayerAttackDmg: 0
   animator: {fileID: 0}
   GroundChk: 1
+  KnifeEffect: {fileID: 7078035248540019161, guid: 8e86cc8399ed3f84f8e8384e737986bb, type: 3}
 --- !u!114 &6810519601983166183
 MonoBehaviour:
   m_ObjectHideFlags: 0

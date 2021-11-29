@@ -38,8 +38,10 @@ public class KnifeEnemy : Unit
     [SerializeField] public int PlayerAttackDmg = 0;
 
     [SerializeField] public Animator animator;
-    public bool GroundChk = true;
-    float Waitcool = 0.0f;
+    public bool GroundChk = true; // 공중부양 방지 변수
+    float Waitcool = 0.0f; //  어그로 풀림 제한 시간
+
+    public GameObject KnifeEffect; // 근거리 적 이펙트
 
     private void Awake()
     {
@@ -272,6 +274,15 @@ public class KnifeEnemy : Unit
     public void PlayerAttack() // 플레이어 공격
     {
         player.OnHit(this, PlayerAttackDmg);
+
+        GameObject Effect = Instantiate(KnifeEffect, PlayerPos, transform.rotation);
+
+        //if (PlayerPos.x - this.transform.position.x < 0)
+        //    Effect.GetComponent<SpriteRenderer>().flipX = true;
+
+        //else
+        //    Effect.GetComponent<SpriteRenderer>().flipX = false;
+
     }
 
     IEnumerator RightMove()

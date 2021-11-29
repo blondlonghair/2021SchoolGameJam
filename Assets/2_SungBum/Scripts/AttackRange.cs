@@ -20,7 +20,7 @@ public class AttackRange : MonoBehaviour
     float dx;
     Transform playerPos; // 원거리용 플레이어 위치
     float rotateDg; // 총알 각도
-    public GameObject PFBullet; // 원거리용 총알
+    public GameObject PFBullet; // 원거리용 
 
     private void Awake()
     {

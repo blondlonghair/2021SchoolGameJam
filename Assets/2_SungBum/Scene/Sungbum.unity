@@ -513,6 +513,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a83f00bb87c8b4c40a3a4afa5e137770, type: 3}
+    - target: {fileID: 2845157915178089611, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41bed4cee856d334ba63a3c1bd13dbd1, type: 3}
 --- !u!1 &1704772650
@@ -775,6 +779,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4144401378963423472, guid: b4530acc268426948b1bfab02651c77f, type: 3}
+      propertyPath: KnifeEffect
+      value: 
+      objectReference: {fileID: 7078035248540019161, guid: 8e86cc8399ed3f84f8e8384e737986bb, type: 3}
+    - target: {fileID: 4144401378963423478, guid: b4530acc268426948b1bfab02651c77f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4144401378963423479, guid: b4530acc268426948b1bfab02651c77f, type: 3}
       propertyPath: m_RootOrder
       value: 7
