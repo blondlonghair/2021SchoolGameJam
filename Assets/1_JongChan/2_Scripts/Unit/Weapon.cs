@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     
     public void Skill1()
     {
-        Instantiate(skill1Effect, transform.position + new Vector3(player.transform.localScale.x > 0 ? 5 : -5,0), Quaternion.Euler(0, player.transform.localScale.x > 0 ? 0 : 180, 0));
+        Instantiate(skill1Effect, transform.position + new Vector3(player.transform.localScale.x > 0 ? 3 : -3,0), Quaternion.Euler(0, player.transform.localScale.x > 0 ? 0 : 180, 0));
         StartCoroutine(Co_Skill1());
     }
 
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
         collider.enabled = true;
         isSkill1 = true;
         
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             playerRigidbody2D.AddForce(Vector2.right * (player.transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 10, ForceMode2D.Impulse);

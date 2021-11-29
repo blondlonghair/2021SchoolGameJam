@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using Cinemachine;
+using Cinemachine.Editor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
-public class GameManager : SingletonMono<GameManager>
+public class GameManager : SingletonMonoDestroy<GameManager>
 {
     [SerializeField] private SkillIconUI skill1IconUI;
     [SerializeField] private SkillIconUI skill2IconUI;
@@ -15,6 +18,7 @@ public class GameManager : SingletonMono<GameManager>
 
     [SerializeField] private GameObject pausePanel;
 
+    private CinemachineImpulseSource impulse;
     private Image hitEffectSpriteImage;
     private Color hitEffectColor;
 
@@ -22,6 +26,7 @@ public class GameManager : SingletonMono<GameManager>
 
     private void Start()
     {
+        impulse = GetComponent<CinemachineImpulseSource>();
         hitEffect.TryGetComponent(out hitEffectSpriteImage);
         hitEffectColor = hitEffectSpriteImage.color;
     }
@@ -48,6 +53,7 @@ public class GameManager : SingletonMono<GameManager>
 
     public void HitEffect()
     {
+        impulse.GenerateImpulse(new Vector3(3,3,0));
         StartCoroutine(Co_HitEffect());
     }
 
@@ -68,4 +74,18 @@ public class GameManager : SingletonMono<GameManager>
         
         hitEffect.SetActive(false);
     }
+
+    // IEnumerator Co_CameraShake()
+    // {
+    //     Vector3 cameraPos = camera.transform.position;
+    //
+    //     for (int i = 0; i < 10; i++)
+    //     {
+    //         yield return YieldCache.WaitForSeconds(0.1f);
+    //         camera.transform.position = new Vector3(Random.Range(cameraPos.x - 5, cameraPos.x + 5),
+    //             Random.Range(cameraPos.y - 5, cameraPos.y + 5), cameraPos.z);   
+    //     }
+    //
+    //     yield return null;
+    // }
 }
