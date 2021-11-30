@@ -7,7 +7,7 @@ public class AttackRange : MonoBehaviour
     GameObject Enemy; // 부모 객체
 
     public float AttackDel = 0; // 현재 공격 딜레이
-    public float BaseAttackDel = 0.7f; // 기본 공격 딜레이
+    public float BaseAttackDel = 0.45f; // 기본 공격 딜레이
     public float GunDelPlus = 0.2f; // 원거리 딜레이 추가량
 
     bool Attack = false; // 공격 가능 판정
@@ -84,7 +84,7 @@ public class AttackRange : MonoBehaviour
                     StartCoroutine("KnifeEnemyAtk");
                 }
 
-                else if (AttackDel <= 0.6f)
+                else if (AttackDel <= 0.25f)
                     AtkReady();
             }
 
@@ -110,7 +110,7 @@ public class AttackRange : MonoBehaviour
                     Bullet.GetComponent<Rigidbody2D>().AddForce(dir * BulletPower, ForceMode2D.Impulse);
                 }
 
-                else if(AttackDel <= 0.71f)
+                else if(AttackDel <= 0.51f)
                     AtkReady();
             }
         }

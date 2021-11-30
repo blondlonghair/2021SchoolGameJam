@@ -140,16 +140,16 @@ public class KnifeEnemy : Unit
         {
             TargetMove = PlayerPos.x - CurPos.x;
 
-            if (TargetMove < 0)
+            if (BasePos.x - this.gameObject.transform.position.x < 0)
             {
                 this.gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                this.gameObject.transform.Translate(MoveSpeed * 1.5f * Time.deltaTime, 0.0f, 0.0f);
+                this.gameObject.transform.Translate(-MoveSpeed * 1.5f * Time.deltaTime, 0.0f, 0.0f);
             }
 
             else
             {
                 this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                this.gameObject.transform.Translate(-MoveSpeed * 1.5f * Time.deltaTime, 0.0f, 0.0f);
+                this.gameObject.transform.Translate(MoveSpeed * 1.5f * Time.deltaTime, 0.0f, 0.0f);
             }
 
             StartCoroutine("TargetFalse");
