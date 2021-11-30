@@ -228,18 +228,19 @@ public class Player : Unit
 
     public void Attack_CheckPosition()
     {
+        Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
+            Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             localScale = new Vector3(-1, 1, 1);
-            Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
-                Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
+            
         }
 
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             localScale = new Vector3(1, 1, 1);
-            Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
-                Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
+            // Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
+            //     Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
         }
     }
 
@@ -250,19 +251,38 @@ public class Player : Unit
         Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? 0.5f : -0.5f, 0, 0),
             Quaternion.Euler(0,0,transform.localScale.x > 0 ? 180 : 0));
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < CheckDistance(); i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
-            // yield return null;
             transform.Translate(new Vector3((transform.localScale.x > 0 ? 1 : -1), 0, 0));
-            // rigidbody2D.AddForce(Vector2.right * (transform.localScale.x > 0 ? 100 : -100) * Time.deltaTime * 50, ForceMode2D.Impulse);
         }
 
         yield return YieldCache.WaitForSeconds(0.1f);
-        // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
 
         isDash = false;
         anim.SetBool("isDash", isDash);
+    }
+
+    int CheckDistance()
+    {
+        int distance = 1;
+
+        for (int i = 0; i < 3; i++)
+        {
+            RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position - (transform.localScale.x > 0 ? Vector3.right : Vector3.left),
+                transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance);
+            foreach (var hit2D in ray)
+            {
+                if (hit2D.transform.name == "Tilemap")
+                {
+                    return distance--;
+                }
+            }
+
+            distance++;
+        }
+
+        return distance--;
     }
 
     public override void OnHit(Unit attacker, int power)
