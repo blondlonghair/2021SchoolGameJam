@@ -306,10 +306,10 @@ public class KnifeEnemy : Unit
 
     IEnumerator TargetFalse()
     {
-        yield return YieldCache.WaitForSeconds(1.3f);
+        yield return YieldCache.WaitForSeconds(1.5f);
         if (Waitcool <= 0)
         {
-            Waitcool = 0.7f;
+            Waitcool = 0.5f;
             GroundChk = true;
         }
         BasePos = CurPos;
