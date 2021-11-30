@@ -45,11 +45,11 @@ AnimationClip:
       value: {fileID: 21300000, guid: 5f6bb0ef1f6f2534a8b16f6188b5c5d1, type: 3}
     - time: 1.5
       value: {fileID: 21300000, guid: 90027fce129b1fb49af9e230a8052e21, type: 3}
-    - time: 1.625
-      value: {fileID: 21300000, guid: f7b7221216ae3e54a98efe55c1561f8b, type: 3}
     - time: 1.75
+      value: {fileID: 21300000, guid: f7b7221216ae3e54a98efe55c1561f8b, type: 3}
+    - time: 2
       value: {fileID: 21300000, guid: d303732f85254e24f8b2ef469b0e619d, type: 3}
-    - time: 1.875
+    - time: 2.25
       value: {fileID: 21300000, guid: 6bba37fcaefd8254dac2d37dc6118cc8, type: 3}
     attribute: m_Sprite
     path: 
@@ -91,7 +91,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2
+    m_StopTime: 2.375
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -111,7 +111,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 2
+  - time: 2.375
     functionName: OnDeadEnd
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: ba54370304d245145a1557c5a0a4160f, type: 3}
