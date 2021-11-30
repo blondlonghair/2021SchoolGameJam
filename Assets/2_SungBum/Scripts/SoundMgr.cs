@@ -16,6 +16,8 @@ public class SoundMgr : SingletonMono<SoundMgr>
 
     public string SceneName;
 
+    bool VolumeDown = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,8 @@ public class SoundMgr : SingletonMono<SoundMgr>
     // Update is called once per frame
     void Update()
     {
-        this.gameObject.GetComponent<AudioSource>().volume = BgmVolume;
+        if(VolumeDown == false)
+            this.gameObject.GetComponent<AudioSource>().volume = BgmVolume;
 
         if (SceneName != SceneManager.GetActiveScene().name)
         {
@@ -33,6 +36,7 @@ public class SoundMgr : SingletonMono<SoundMgr>
 
             if (SceneName == "Title")
             {
+                VolumeDown = false;
                 this.gameObject.GetComponent<AudioSource>().clip = audioClips[0];
                 this.gameObject.GetComponent<AudioSource>().Play();
             }
@@ -45,12 +49,14 @@ public class SoundMgr : SingletonMono<SoundMgr>
 
             else if (SceneName == "Stage1" || SceneName == "Stage2")
             {
+                VolumeDown = false;
                 this.gameObject.GetComponent<AudioSource>().clip = audioClips[2];
                 this.gameObject.GetComponent<AudioSource>().Play();
             }
 
             else if (SceneName == "Ending")
             {
+                VolumeDown = false;
                 this.gameObject.GetComponent<AudioSource>().clip = audioClips[3];
                 this.gameObject.GetComponent<AudioSource>().Play();
             }
@@ -61,6 +67,29 @@ public class SoundMgr : SingletonMono<SoundMgr>
             //    this.gameObject.GetComponent<AudioSource>().clip = audioClips[3];
             //    this.gameObject.GetComponent<AudioSource>().Play();
             //}
+        }
+
+        if (SceneName == "Intro")
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Debug.Log("d");
+                VolumeDown = true;
+            }
+
+            if (VolumeDown == true)
+            {
+                VlDown();
+            }
+        }
+    }
+
+    void VlDown()
+    {
+        if(this.gameObject.GetComponent<AudioSource>().volume >= 0)
+        {
+            Debug.Log("Hehe");
+            this.gameObject.GetComponent<AudioSource>().volume -= Time.deltaTime * 1;
         }
     }
 }
