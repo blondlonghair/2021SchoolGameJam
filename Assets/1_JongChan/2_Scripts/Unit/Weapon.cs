@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
         collider.enabled = true;
         isSkill1 = true;
         
-        for (int i = 0; i < CheckDistance(); i++)
+        for (int i = 0; i < CheckDistance(5); i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             player.transform.Translate(new Vector3((player.transform.localScale.x > 0 ? 1 : -1), 0, 0));
@@ -68,26 +68,33 @@ public class Weapon : MonoBehaviour
         yield return null;
     }
     
-    int CheckDistance()
+    int CheckDistance(int time)
     {
-        int distance = 1;
+        int distance = 0;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < time; i++)
         {
-            RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position - (transform.localScale.x > 0 ? Vector3.right : Vector3.left),
-                transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance);
+            RaycastHit2D[] ray = Physics2D.RaycastAll(player.transform.position, player.transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance + 0.5f);
+
+            foreach (var raycastHit2D in ray)
+            {
+                print(raycastHit2D.transform.name);
+            }
+            
             foreach (var hit2D in ray)
             {
                 if (hit2D.transform.name == "Tilemap")
                 {
-                    return distance--;
+                    print(distance);
+                    return distance;
                 }
             }
 
             distance++;
         }
 
-        return distance--;
+        print(distance);
+        return distance;
     }
     
     private void OnTriggerEnter2D(Collider2D other)

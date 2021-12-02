@@ -79,15 +79,8 @@ public class Player : Unit
                 }
             }
         }
-
-        // if (rigidbody2D.velocity.x > moveSpeed)
-        // {
-        //     rigidbody2D.velocity = new Vector2(moveSpeed, rigidbody2D.velocity.y);
-        // }
-        // else if (rigidbody2D.velocity.x < moveSpeed * (-1))
-        // {
-        //     rigidbody2D.velocity = new Vector2(moveSpeed * (-1), rigidbody2D.velocity.y);
-        // }
+        
+        Debug.DrawRay(transform.position, transform.localScale.x > 0 ? Vector2.right : Vector2.left,Color.red);
     }
 
     private void Move()
@@ -95,14 +88,12 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            // rigidbody2D.AddForce(Vector2.left * Time.deltaTime * 100, ForceMode2D.Impulse);
             transform.Translate(Vector2.left * Time.deltaTime * 10);
             anim.SetBool("isRun", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
-            // rigidbody2D.AddForce(Vector2.right * Time.deltaTime * 100, ForceMode2D.Impulse);
             transform.Translate(Vector2.right * Time.deltaTime * 10);
             anim.SetBool("isRun", true);
         }
@@ -113,7 +104,6 @@ public class Player : Unit
 
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
-            // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * 0f, rigidbody2D.velocity.y);
             anim.SetTrigger("isIdle");
         }
     }
@@ -153,16 +143,14 @@ public class Player : Unit
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                // rigidbody2D.AddForce(Vector2.right * -100, ForceMode2D.Impulse);
-                transform.Translate(Vector2.left);
+                transform.Translate(Vector2.left * CheckDistance(1));
                 weapon.Attack();
                 print("LeftArrowAtk");
             }
 
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                // rigidbody2D.AddForce(Vector2.right * 100, ForceMode2D.Impulse);
-                transform.Translate(Vector2.right);
+                transform.Translate(Vector2.right * CheckDistance(1));
                 weapon.Attack();
                 print("RightArrowAtk");
             }
@@ -233,14 +221,11 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             localScale = new Vector3(-1, 1, 1);
-            
         }
 
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             localScale = new Vector3(1, 1, 1);
-            // Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? -0.3f : 0.3f, 0, 0),
-            //     Quaternion.Euler(0,0,transform.localScale.x > 0 ? 0 : 180));
         }
     }
 
@@ -251,7 +236,7 @@ public class Player : Unit
         Instantiate(dashEffect, transform.position + new Vector3(transform.localScale.x > 0 ? 0.5f : -0.5f, 0, 0),
             Quaternion.Euler(0,0,transform.localScale.x > 0 ? 180 : 0));
 
-        for (int i = 0; i < CheckDistance(); i++)
+        for (int i = 0; i < CheckDistance(3); i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             transform.Translate(new Vector3((transform.localScale.x > 0 ? 1 : -1), 0, 0));
@@ -263,26 +248,33 @@ public class Player : Unit
         anim.SetBool("isDash", isDash);
     }
 
-    int CheckDistance()
+    int CheckDistance(int time)
     {
-        int distance = 1;
+        int distance = 0;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < time; i++)
         {
-            RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position - (transform.localScale.x > 0 ? Vector3.right : Vector3.left),
-                transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance);
+            RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position, transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance + 0.5f);
+
+            foreach (var raycastHit2D in ray)
+            {
+                print(raycastHit2D.transform.name);
+            }
+            
             foreach (var hit2D in ray)
             {
                 if (hit2D.transform.name == "Tilemap")
                 {
-                    return distance--;
+                    print(distance);
+                    return distance;
                 }
             }
 
             distance++;
         }
 
-        return distance--;
+        print(distance);
+        return distance;
     }
 
     public override void OnHit(Unit attacker, int power)
