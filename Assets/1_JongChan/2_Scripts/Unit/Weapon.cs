@@ -54,8 +54,10 @@ public class Weapon : MonoBehaviour
     {
         collider.enabled = true;
         isSkill1 = true;
+
+        int skilldistance = CheckDistance(5);
         
-        for (int i = 0; i < CheckDistance(5); i++)
+        for (int i = 0; i < skilldistance; i++)
         {
             yield return YieldCache.WaitForSeconds(0.01f);
             player.transform.Translate(new Vector3((player.transform.localScale.x > 0 ? 1 : -1), 0, 0));
@@ -74,7 +76,7 @@ public class Weapon : MonoBehaviour
 
         for (int i = 0; i < time; i++)
         {
-            RaycastHit2D[] ray = Physics2D.RaycastAll(player.transform.position, player.transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance + 0.5f);
+            RaycastHit2D[] ray = Physics2D.RaycastAll(player.transform.position, player.transform.localScale.x > 0 ? Vector2.right : Vector2.left, distance + 1f);
 
             foreach (var raycastHit2D in ray)
             {

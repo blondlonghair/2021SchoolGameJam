@@ -89,12 +89,14 @@ public class Player : Unit
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
             transform.Translate(Vector2.left * Time.deltaTime * 10);
+
             anim.SetBool("isRun", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             transform.Translate(Vector2.right * Time.deltaTime * 10);
+
             anim.SetBool("isRun", true);
         }
         else
