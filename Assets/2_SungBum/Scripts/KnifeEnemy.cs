@@ -306,7 +306,7 @@ public class KnifeEnemy : Unit
 
     IEnumerator TargetFalse()
     {
-        yield return YieldCache.WaitForSeconds(1.5f);
+        yield return YieldCache.WaitForSeconds(0.7f);
         if (Waitcool <= 0)
         {
             Waitcool = 0.5f;
