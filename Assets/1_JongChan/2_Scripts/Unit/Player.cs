@@ -39,8 +39,8 @@ public class Player : Unit
 
         keyDictionary = new Dictionary<KeyCode, Action>
         {
-            {KeyCode.LeftAlt, Jump},
-            {KeyCode.X, Dash},
+            {KeyCode.C, Jump},
+            {KeyCode.Z, Dash},
             {KeyCode.A, Skill_1},
             {KeyCode.S, Skill_2}
         };
@@ -85,14 +85,14 @@ public class Player : Unit
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.X))
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
             transform.Translate(Vector2.left * Time.deltaTime * 10);
 
             anim.SetBool("isRun", true);
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftControl))
+        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.X))
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             transform.Translate(Vector2.right * Time.deltaTime * 10);
@@ -133,12 +133,12 @@ public class Player : Unit
 
     private void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             anim.SetBool("isAttack", true);
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.X))
         {
             if (atkTimer < atkInterval) return;
             atkTimer = 0;
@@ -164,13 +164,13 @@ public class Player : Unit
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.X))
         {
             atkTimer = 0.5f;
             anim.SetBool("isAttack", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && curJump > 0)
+        if (Input.GetKeyDown(KeyCode.X) && curJump > 0)
         {
             anim.SetTrigger("isJumpAttack");
             weapon.Attack();

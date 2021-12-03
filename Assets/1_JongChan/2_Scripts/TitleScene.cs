@@ -69,13 +69,13 @@ public class TitleScene : MonoBehaviour
 
         if (isOnOff)
         {
-            title.a += 0.01f;
+            title.a += Time.deltaTime;
             titleText.color = title;
         }
 
         else
         {
-            title.a -= 0.01f;
+            title.a -= Time.deltaTime;
             titleText.color = title;
         }
 
