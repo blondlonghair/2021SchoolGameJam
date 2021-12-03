@@ -557,11 +557,11 @@ PrefabInstance:
     - target: {fileID: 8779076291885075913, guid: 8801660cda713964484deec6057b7c0d, type: 3}
       propertyPath: audioClips.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 9837959c1277d7e4eb3db566b1dc7a0a, type: 3}
+      objectReference: {fileID: 8300000, guid: 651310736c91a094bb3f992b44469afb, type: 3}
     - target: {fileID: 8779076291885075913, guid: 8801660cda713964484deec6057b7c0d, type: 3}
       propertyPath: audioClips.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: 1fa555ebb70f2d54782dad3337b985a9, type: 3}
     - target: {fileID: 8779076291885075914, guid: 8801660cda713964484deec6057b7c0d, type: 3}
       propertyPath: m_RootOrder
       value: 6
